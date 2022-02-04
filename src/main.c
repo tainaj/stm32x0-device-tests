@@ -3,6 +3,11 @@
 #define TEST 2
 
 /**
+ * @brief Global variables.
+ */
+uint32_t core_clock_hz;
+
+/**
  * @brief C representative of LC_I2C class
  * 
  */

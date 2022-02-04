@@ -12,6 +12,6 @@
 void delay(int);
 
 // Global variables.
-uint32_t core_clock_hz;
+extern uint32_t core_clock_hz;
 
 #endif
