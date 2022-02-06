@@ -1,6 +1,6 @@
 #include "main.h"
 
-#define TEST 2
+#define TEST 3
 
 /**
  * @brief Global variables.
@@ -164,6 +164,238 @@ int main(void) {
 
       delay(4000 * 1000);
     }
+
+  #elif TEST == 3
+    LC_I2C_init(&LC_I2C);       // initialize the lcd
+    LC_I2C_backlight(&LC_I2C);
+    LC_I2C_setCursor(&LC_I2C, 1,0);
+    LC_I2C_print(&LC_I2C, "Test 3: Experiment");
+
+    // 3.0: Toggle backlight
+    LC_I2C_setCursor(&LC_I2C, 0,1);
+    LC_I2C_print(&LC_I2C, "0: noBacklight      ");
+    LC_I2C_setCursor(&LC_I2C, 0,2);
+    LC_I2C_print(&LC_I2C, "0: backlight        ");
+    delay(1000 * 1000);
+
+    LC_I2C_noBacklight(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_backlight(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_clear(&LC_I2C);
+
+    // 3.1: Toggle display
+    LC_I2C_setCursor(&LC_I2C, 0,1);
+    LC_I2C_print(&LC_I2C, "1: noDisplay        ");
+    LC_I2C_setCursor(&LC_I2C, 0,2);
+    LC_I2C_print(&LC_I2C, "1: display          ");
+    delay(1000 * 1000);
+
+    LC_I2C_noDisplay(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_display(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_clear(&LC_I2C);
+
+    // 3.2: Toggle underline cursor
+    LC_I2C_setCursor(&LC_I2C, 0,1);
+    LC_I2C_print(&LC_I2C, "2: cursor           ");
+    LC_I2C_setCursor(&LC_I2C, 0,2);
+    LC_I2C_print(&LC_I2C, "2: noCursor         ");
+    delay(1000 * 1000);
+
+    LC_I2C_setCursor(&LC_I2C, 7,3);
+    LC_I2C_cursor(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_print(&LC_I2C, "1 ");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "2 ");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "3 ");
+    delay(1000 * 1000);
+
+    LC_I2C_noCursor(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_clear(&LC_I2C);
+
+    // 3.3: Toggle blinking cursor
+    LC_I2C_setCursor(&LC_I2C, 0,1);
+    LC_I2C_print(&LC_I2C, "3: blink            ");
+    LC_I2C_setCursor(&LC_I2C, 0,2);
+    LC_I2C_print(&LC_I2C, "3: noBlink          ");
+    delay(1000 * 1000);
+
+    LC_I2C_setCursor(&LC_I2C, 7,3);
+    LC_I2C_cursor(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_blink(&LC_I2C);
+    delay(3000 * 1000);
+
+    LC_I2C_print(&LC_I2C, "1 ");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "2 ");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "3 ");
+    delay(1000 * 1000);
+
+    LC_I2C_noBlink(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_noCursor(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_clear(&LC_I2C);
+
+    // 3.4: Text flow right-to-left, left-to-right
+    LC_I2C_setCursor(&LC_I2C, 0,1);
+    LC_I2C_print(&LC_I2C, "4: rightToLeft      ");
+    LC_I2C_setCursor(&LC_I2C, 0,2);
+    LC_I2C_print(&LC_I2C, "4: leftToRight      ");
+    delay(1000 * 1000);
+
+    LC_I2C_setCursor(&LC_I2C, 10,3);
+    LC_I2C_cursor(&LC_I2C);
+    LC_I2C_rightToLeft(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_print(&LC_I2C, "1 ");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "2 ");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "3 ");
+    delay(1000 * 1000);
+
+    LC_I2C_leftToRight(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_print(&LC_I2C, "4 ");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "5 ");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "6 ");
+    delay(1000 * 1000);
+
+    LC_I2C_noCursor(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_clear(&LC_I2C);
+
+    // 3.5: Right justify, left justify
+    LC_I2C_setCursor(&LC_I2C, 0,1);
+    LC_I2C_print(&LC_I2C, "5: rightToLeft      ");
+    LC_I2C_setCursor(&LC_I2C, 0,2);
+    LC_I2C_print(&LC_I2C, "5: leftToRight      ");
+    delay(1000 * 1000);
+
+    LC_I2C_setCursor(&LC_I2C, 10,3);
+    LC_I2C_cursor(&LC_I2C);
+    LC_I2C_autoscroll(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_print(&LC_I2C, "12");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "34");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "56");
+    delay(1000 * 1000);
+
+    LC_I2C_noAutoscroll(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_print(&LC_I2C, "ab");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "cd");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "ef");
+    delay(1000 * 1000);
+
+    LC_I2C_noCursor(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_clear(&LC_I2C);
+
+    // 3.6: Scroll display without changing RAM
+    LC_I2C_setCursor(&LC_I2C, 0,1);
+    LC_I2C_print(&LC_I2C, "6: scrollDisplayLeft");
+    LC_I2C_setCursor(&LC_I2C, 0,2);
+    LC_I2C_print(&LC_I2C, "6 scrollDisplayRight");
+    delay(1000 * 1000);
+
+    LC_I2C_setCursor(&LC_I2C, 4,3);
+    LC_I2C_cursor(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_print(&LC_I2C, "12");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "34");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "56");
+    delay(1000 * 1000);
+
+    LC_I2C_scrollDisplayRight(&LC_I2C);
+    delay(3000 * 1000);
+
+    LC_I2C_print(&LC_I2C, "ab");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "cd");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "ef");
+    delay(1000 * 1000);
+
+    LC_I2C_scrollDisplayLeft(&LC_I2C);
+    delay(3000 * 1000);
+
+    LC_I2C_noCursor(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_clear(&LC_I2C);
+
+    // 3.7: Scroll cursor without changing RAM
+    LC_I2C_setCursor(&LC_I2C, 0,1);
+    LC_I2C_print(&LC_I2C, "7: scrollCursorLeft ");
+    LC_I2C_setCursor(&LC_I2C, 0,2);
+    LC_I2C_print(&LC_I2C, "7: scrollCursorRight");
+    delay(1000 * 1000);
+
+    LC_I2C_setCursor(&LC_I2C, 4,3);
+    LC_I2C_cursor(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_print(&LC_I2C, "12");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "34");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "56");
+    delay(1000 * 1000);
+
+    LC_I2C_scrollCursorLeft(&LC_I2C);
+    delay(1000 * 1000);
+    LC_I2C_scrollCursorLeft(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_print(&LC_I2C, "ab");
+    delay(1000 * 1000);
+    LC_I2C_print(&LC_I2C, "cd");
+    delay(1000 * 1000);
+
+    LC_I2C_scrollCursorRight(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_print(&LC_I2C, "XY");
+    delay(1000 * 1000);
+
+    LC_I2C_noCursor(&LC_I2C);
+    delay(1000 * 1000);
+
+    LC_I2C_clear(&LC_I2C);
+
   #endif
     
   while (1);

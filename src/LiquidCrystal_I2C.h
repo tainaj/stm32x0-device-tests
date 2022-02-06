@@ -2,8 +2,6 @@
 #ifndef LiquidCrystal_I2C_h
 #define LiquidCrystal_I2C_h
 
-//#include <stdint.h> //#include <inttypes.h>
-//#include <stdio.h> //#include "Print.h"
 #include "i2c.h" //#include <Wire.h>
 #include "global.h"
 
@@ -77,24 +75,26 @@ typedef struct LiquidCrystal_I2C {
 void LC_I2C_begin(LiquidCrystal_I2C *this, uint8_t cols, uint8_t rows, uint8_t lcd_rows);
 void LC_I2C_clear(LiquidCrystal_I2C *this);
 void LC_I2C_home(LiquidCrystal_I2C *this);
-//void LC_I2C_noDisplay(LiquidCrystal_I2C *this);
+void LC_I2C_noDisplay(LiquidCrystal_I2C *this);
 void LC_I2C_display(LiquidCrystal_I2C *this);
-/*void LC_I2C_noBlink(LiquidCrystal_I2C *this);
+void LC_I2C_noBlink(LiquidCrystal_I2C *this);
 void LC_I2C_blink(LiquidCrystal_I2C *this);
 void LC_I2C_noCursor(LiquidCrystal_I2C *this);
 void LC_I2C_cursor(LiquidCrystal_I2C *this);
 void LC_I2C_scrollDisplayLeft(LiquidCrystal_I2C *this);
 void LC_I2C_scrollDisplayRight(LiquidCrystal_I2C *this);
-void LC_I2C_printLeft(LiquidCrystal_I2C *this);
-void LC_I2C_printRight(LiquidCrystal_I2C *this);
+void LC_I2C_scrollCursorLeft(LiquidCrystal_I2C *this);
+void LC_I2C_scrollCursorRight(LiquidCrystal_I2C *this);
+//void LC_I2C_printLeft(LiquidCrystal_I2C *this);      // bonus
+//void LC_I2C_printRight(LiquidCrystal_I2C *this);     // bonus
 void LC_I2C_leftToRight(LiquidCrystal_I2C *this);
 void LC_I2C_rightToLeft(LiquidCrystal_I2C *this);
-void LC_I2C_shiftIncrement(LiquidCrystal_I2C *this);
-void LC_I2C_shiftDecrement(LiquidCrystal_I2C *this);
-void LC_I2C_noBacklight(LiquidCrystal_I2C *this);*/
+//void LC_I2C_shiftIncrement(LiquidCrystal_I2C *this); // bonus
+//void LC_I2C_shiftDecrement(LiquidCrystal_I2C *this); // bonus
+void LC_I2C_noBacklight(LiquidCrystal_I2C *this);
 void LC_I2C_backlight(LiquidCrystal_I2C *this);
-/*void LC_I2C_autoscroll(LiquidCrystal_I2C *this);
-void LC_I2C_noAutoscroll(LiquidCrystal_I2C *this);*/
+void LC_I2C_autoscroll(LiquidCrystal_I2C *this);
+void LC_I2C_noAutoscroll(LiquidCrystal_I2C *this);
 void LC_I2C_createChar(LiquidCrystal_I2C *this, uint8_t location, uint8_t charmap[]);
 // Example: 	const char bell[8] PROGMEM = {B00100,B01110,B01110,B01110,B11111,B00000,B00100,B00000};
 
@@ -102,7 +102,7 @@ void LC_I2C_setCursor(LiquidCrystal_I2C *this, uint8_t, uint8_t);
 void LC_I2C_print(LiquidCrystal_I2C *this, const char *str);
 void LC_I2C_printByte(LiquidCrystal_I2C *this, uint8_t byte);
   
-//void LC_I2C_command(LiquidCrystal_I2C *this, uint8_t);
+//void LC_I2C_command(LiquidCrystal_I2C *this, uint8_t); // static
 void LC_I2C_init(LiquidCrystal_I2C *this);
 //void LC_I2C_oled_init(LiquidCrystal_I2C *this);
 

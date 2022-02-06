@@ -194,68 +194,76 @@ void LC_I2C_printByte(LiquidCrystal_I2C *this, uint8_t byte) {
 	LC_I2C_write(this, byte);
 }
 
-/*
+
 // Turn the display on/off (quickly)
-void LC_I2C_noDisplay() {
-	_displaycontrol &= ~LCD_DISPLAYON;
-	command(LCD_DISPLAYCONTROL | _displaycontrol);
-}*/
+void LC_I2C_noDisplay(LiquidCrystal_I2C *this) {
+	this->_displaycontrol &= ~LCD_DISPLAYON;
+	command(this, LCD_DISPLAYCONTROL | this->_displaycontrol);
+}
 void LC_I2C_display(LiquidCrystal_I2C *this) {
 	this->_displaycontrol |= LCD_DISPLAYON;
 	command(this, LCD_DISPLAYCONTROL | this->_displaycontrol);
 }
-/*
+
 // Turns the underline cursor on/off
-void LC_I2C_noCursor() {
-	_displaycontrol &= ~LCD_CURSORON;
-	command(LCD_DISPLAYCONTROL | _displaycontrol);
+void LC_I2C_noCursor(LiquidCrystal_I2C *this) {
+	this->_displaycontrol &= ~LCD_CURSORON;
+	command(this, LCD_DISPLAYCONTROL | this->_displaycontrol);
 }
-void LC_I2C_cursor() {
-	_displaycontrol |= LCD_CURSORON;
-	command(LCD_DISPLAYCONTROL | _displaycontrol);
+void LC_I2C_cursor(LiquidCrystal_I2C *this) {
+	this->_displaycontrol |= LCD_CURSORON;
+	command(this, LCD_DISPLAYCONTROL | this->_displaycontrol);
 }
 
 // Turn on and off the blinking cursor
-void LC_I2C_noBlink() {
-	_displaycontrol &= ~LCD_BLINKON;
-	command(LCD_DISPLAYCONTROL | _displaycontrol);
+void LC_I2C_noBlink(LiquidCrystal_I2C *this) {
+	this->_displaycontrol &= ~LCD_BLINKON;
+	command(this, LCD_DISPLAYCONTROL | this->_displaycontrol);
 }
-void LC_I2C_blink() {
-	_displaycontrol |= LCD_BLINKON;
-	command(LCD_DISPLAYCONTROL | _displaycontrol);
+void LC_I2C_blink(LiquidCrystal_I2C *this) {
+	this->_displaycontrol |= LCD_BLINKON;
+	command(this, LCD_DISPLAYCONTROL | this->_displaycontrol);
 }
 
 // These commands scroll the display without changing the RAM
-void LC_I2C_scrollDisplayLeft(void) {
-	command(LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVELEFT);
+void LC_I2C_scrollDisplayLeft(LiquidCrystal_I2C *this) {
+	command(this, LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVELEFT);
 }
-void LC_I2C_scrollDisplayRight(void) {
-	command(LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVERIGHT);
+void LC_I2C_scrollDisplayRight(LiquidCrystal_I2C *this) {
+	command(this, LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVERIGHT);
+}
+
+// These commands scroll the cursor without changing the RAM
+void LC_I2C_scrollCursorLeft(LiquidCrystal_I2C *this) {
+	command(this, LCD_CURSORSHIFT | LCD_CURSORMOVE | LCD_MOVELEFT);
+}
+void LC_I2C_scrollCursorRight(LiquidCrystal_I2C *this) {
+	command(this, LCD_CURSORSHIFT | LCD_CURSORMOVE | LCD_MOVERIGHT);
 }
 
 // This is for text that flows Left to Right
-void LC_I2C_leftToRight(void) {
-	_displaymode |= LCD_ENTRYLEFT;
-	command(LCD_ENTRYMODESET | _displaymode);
+void LC_I2C_leftToRight(LiquidCrystal_I2C *this) {
+	this->_displaymode |= LCD_ENTRYLEFT;
+	command(this, LCD_ENTRYMODESET | this->_displaymode);
 }
 
 // This is for text that flows Right to Left
-void LC_I2C_rightToLeft(void) {
-	_displaymode &= ~LCD_ENTRYLEFT;
-	command(LCD_ENTRYMODESET | _displaymode);
+void LC_I2C_rightToLeft(LiquidCrystal_I2C *this) {
+	this->_displaymode &= ~LCD_ENTRYLEFT;
+	command(this, LCD_ENTRYMODESET | this->_displaymode);
 }
 
 // This will 'right justify' text from the cursor
-void LC_I2C_autoscroll(void) {
-	_displaymode |= LCD_ENTRYSHIFTINCREMENT;
-	command(LCD_ENTRYMODESET | _displaymode);
+void LC_I2C_autoscroll(LiquidCrystal_I2C *this) {
+	this->_displaymode |= LCD_ENTRYSHIFTINCREMENT;
+	command(this, LCD_ENTRYMODESET | this->_displaymode);
 }
 
 // This will 'left justify' text from the cursor
-void LC_I2C_noAutoscroll(void) {
-	_displaymode &= ~LCD_ENTRYSHIFTINCREMENT;
-	command(LCD_ENTRYMODESET | _displaymode);
-}*/
+void LC_I2C_noAutoscroll(LiquidCrystal_I2C *this) {
+	this->_displaymode &= ~LCD_ENTRYSHIFTINCREMENT;
+	command(this, LCD_ENTRYMODESET | this->_displaymode);
+}
 
 // Allows us to fill the first 8 CGRAM locations
 // with custom characters
@@ -274,13 +282,13 @@ void LC_I2C_createChar(LiquidCrystal_I2C *this, uint8_t location, uint8_t charma
 	for (int i=0; i<8; i++) {
 	    	write(pgm_read_byte_near(charmap++));
 	}
-}
+}*/
 
 // Turn the (optional) backlight off/on
-void LC_I2C_noBacklight(void) {
-	_backlightval=LCD_NOBACKLIGHT;
-	expanderWrite(0);
-}*/
+void LC_I2C_noBacklight(LiquidCrystal_I2C *this) {
+	this->_backlightval=LCD_NOBACKLIGHT;
+	expanderWrite(this, 0);
+}
 
 void LC_I2C_backlight(LiquidCrystal_I2C *this) {
 	this->_backlightval=LCD_BACKLIGHT;
