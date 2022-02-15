@@ -61,16 +61,21 @@ LFLAGS += -Wall
 LFLAGS += --specs=nosys.specs
 LFLAGS += -nostdlib
 LFLAGS += -lgcc
+LFLAGS += -lc
 LFLAGS += -T$(LSCRIPT)
 
 AS_SRC   =  ./boot_code/$(MCU_FILES)_core.S
 AS_SRC   += ./vector_tables/$(MCU_FILES)_vt.S
-AS_SRC   += ./src/delay_$(MCU_CLASS).S
 C_SRC    =  ./src/main.c
 C_SRC    += ./src/i2c.c
 C_SRC    += ./src/LiquidCrystal_I2C.c
+C_SRC    += ./src/delay.c
+C_SRC    += ./src/my_timer.c
+C_SRC    += ./src/interrupts_c.c
+C_SRC    += ./src/button.c
 
 INCLUDE  =  -I./
+INCLUDE  += -I./src
 INCLUDE  += -I./device_headers
 
 OBJS  = $(AS_SRC:.S=.o)

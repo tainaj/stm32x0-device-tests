@@ -2,7 +2,8 @@
 #ifndef LiquidCrystal_I2C_h
 #define LiquidCrystal_I2C_h
 
-#include "i2c.h" //#include <Wire.h>
+#include "delay.h"
+#include "i2c.h"
 #include "global.h"
 
 // commands
@@ -57,6 +58,7 @@
 
 typedef struct LiquidCrystal_I2C {
   // Private variables
+  I2C_TypeDef * _I2Cx;
   uint8_t _Addr;
   uint8_t _displayfunction;
   uint8_t _displaycontrol;
@@ -100,6 +102,7 @@ void LC_I2C_createChar(LiquidCrystal_I2C *this, uint8_t location, uint8_t charma
 
 void LC_I2C_setCursor(LiquidCrystal_I2C *this, uint8_t, uint8_t); 
 void LC_I2C_print(LiquidCrystal_I2C *this, const char *str);
+void LC_I2C_print_pad(LiquidCrystal_I2C *this, const char *str, int length);
 void LC_I2C_printByte(LiquidCrystal_I2C *this, uint8_t byte);
   
 //void LC_I2C_command(LiquidCrystal_I2C *this, uint8_t); // static

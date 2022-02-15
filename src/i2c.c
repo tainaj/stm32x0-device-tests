@@ -6,23 +6,23 @@ uint8_t dec_to_bcd(uint8_t dec)
           ((dec % 10) & 0xF));
 }
 
-void i2c_init(uint8_t addr)
+void i2c_init(I2C_TypeDef * I2Cx, uint8_t addr)
 {
   // Initialize the I2C1 peripheral.
   // First, disable the peripheral.
-  I2C1->CR1 &= ~(I2C_CR1_PE);
+  I2Cx->CR1 &= ~(I2C_CR1_PE);
   // Clear some 'CR1' bits.
-  I2C1->CR1 &= ~(I2C_CR1_DNF |
+  I2Cx->CR1 &= ~(I2C_CR1_DNF |
                  I2C_CR1_ANFOFF |
                  I2C_CR1_SMBHEN |
                  I2C_CR1_SMBDEN);
   // Clear some 'CR2' bits.
-  I2C1->CR2 &= ~(I2C_CR2_RD_WRN |
+  I2Cx->CR2 &= ~(I2C_CR2_RD_WRN |
                  I2C_CR2_NACK |
                  I2C_CR2_RELOAD |
                  I2C_CR2_AUTOEND);
   // Clear all 'ICR' flags.
-  I2C1->ICR |= (I2C_ICR_ADDRCF |
+  I2Cx->ICR |= (I2C_ICR_ADDRCF |
                 I2C_ICR_NACKCF |
                 I2C_ICR_STOPCF |
                 I2C_ICR_BERRCF |
@@ -33,57 +33,57 @@ void i2c_init(uint8_t addr)
                 I2C_ICR_ALERTCF);
   // Configure I2C timing.
   // Reset all but the reserved bits.
-  I2C1->TIMINGR &= (0x0F000000);
+  I2Cx->TIMINGR &= (0x0F000000);
   // (100KHz @48MHz core clock, according to an application note)
-  I2C1->TIMINGR |= (0xB0420F13);
+  I2Cx->TIMINGR |= (0xB0420F13);
   // Enable the peripheral. (PE = 'Peripheral Enable')
-  I2C1->CR1 |= I2C_CR1_PE;
+  I2Cx->CR1 |= I2C_CR1_PE;
 
   // Set the LCD text display's I2C address.
-  I2C1->CR2 &= ~(I2C_CR2_SADD);
-  I2C1->CR2 |= (addr << I2C_CR2_SADD_Pos);
+  I2Cx->CR2 &= ~(I2C_CR2_SADD);
+  I2Cx->CR2 |= (addr << I2C_CR2_SADD_Pos);
   // Write one byte; (D7 D6 D5 D4 BL E  RW Rs)
-  I2C1->CR2 &= ~(I2C_CR2_NBYTES);
-  I2C1->CR2 |=  (0x01 << I2C_CR2_NBYTES_Pos);
+  I2Cx->CR2 &= ~(I2C_CR2_NBYTES);
+  I2Cx->CR2 |=  (0x01 << I2C_CR2_NBYTES_Pos);
 }
 
-void i2c_start(void)
+void i2c_start(I2C_TypeDef * I2Cx)
 { // originally inline
   // Send 'Start' condition, and wait for acknowledge.
-  I2C1->CR2 |= (I2C_CR2_START);
-  while ((I2C1->CR2 & I2C_CR2_START))
+  I2Cx->CR2 |= (I2C_CR2_START);
+  while ((I2Cx->CR2 & I2C_CR2_START))
   {
   }
 }
 
-void i2c_stop(void)
+void i2c_stop(I2C_TypeDef * I2Cx)
 { // originally inline
   // Send 'Stop' condition, and wait for acknowledge.
-  I2C1->CR2 |= (I2C_CR2_STOP);
-  while ((I2C1->CR2 & I2C_CR2_STOP))
+  I2Cx->CR2 |= (I2C_CR2_STOP);
+  while ((I2Cx->CR2 & I2C_CR2_STOP))
   {
   }
   // Reset the ICR ('Interrupt Clear Register') event flag.
-  I2C1->ICR |= (I2C_ICR_STOPCF);
-  while ((I2C1->ICR & I2C_ICR_STOPCF))
+  I2Cx->ICR |= (I2C_ICR_STOPCF);
+  while ((I2Cx->ICR & I2C_ICR_STOPCF))
   {
   }
 }
 
-void i2c_write_byte(uint8_t dat)
+void i2c_write_byte(I2C_TypeDef * I2Cx, uint8_t dat)
 {
-  I2C1->TXDR = (I2C1->TXDR & 0xFFFFFF00) | dat;
+  I2Cx->TXDR = (I2Cx->TXDR & 0xFFFFFF00) | dat;
   // Wait for one of these ISR bits:
   // 'TXIS' ("ready for next byte")
   // 'TC'   ("transfer complete")
-  while (!(I2C1->ISR & (I2C_ISR_TXIS | I2C_ISR_TC)))
+  while (!(I2Cx->ISR & (I2C_ISR_TXIS | I2C_ISR_TC)))
   {
   }
   // (Also of interest: 'TXE' ("TXDR register is empty") and
   //  'TCR' ("transfer complete, and 'RELOAD' is set."))
 }
 
-uint8_t i2c_read_byte(void)
+/*uint8_t i2c_read_byte(void)
 {
   // Wait for a byte of data to be available, then read it.
   while (!(I2C1->ISR & I2C_ISR_RXNE))
@@ -119,4 +119,4 @@ uint8_t i2c_read_register(uint8_t reg_addr)
 
   // Return the read value.
   return read_result;
-}
+}*/

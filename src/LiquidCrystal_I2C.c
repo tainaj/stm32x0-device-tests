@@ -2,7 +2,7 @@
 
 #include "LiquidCrystal_I2C.h"
 
-#define printIIC(args)	i2c_write_byte(args)
+#define printIIC(i2cx, args)	i2c_write_byte(i2cx, args)
 
 /**
  * @brief Special low-level function: send byte to LC_I2C
@@ -55,7 +55,7 @@ static inline void LC_I2C_write(LiquidCrystal_I2C *this, uint8_t value) {
 
 static void init_priv(LiquidCrystal_I2C *this)
 {
-	i2c_init(this->_Addr);
+	i2c_init(this->_I2Cx, this->_Addr);
 	this->_displayfunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
 	LC_I2C_begin(this, this->_cols, this->_rows, LCD_5x8DOTS);  
 }
@@ -76,9 +76,9 @@ static void write4bits(LiquidCrystal_I2C *this, uint8_t value) {
 }
 
 static void expanderWrite(LiquidCrystal_I2C *this, uint8_t _data){                                        
-	i2c_start();
-	printIIC((int)(_data) | this->_backlightval);
-	i2c_stop();
+	i2c_start(this->_I2Cx);
+	printIIC(this->_I2Cx, (int)(_data) | this->_backlightval);
+	i2c_stop(this->_I2Cx);
 }
 
 static void pulseEnable(LiquidCrystal_I2C *this, uint8_t _data){
@@ -183,10 +183,23 @@ void LC_I2C_setCursor(LiquidCrystal_I2C *this, uint8_t col, uint8_t row){
 }
 
 void LC_I2C_print(LiquidCrystal_I2C *this, const char *str) {
-	//int size = strlen(str);
 	uint8_t *buffer = (uint8_t*)str;
 	while (*buffer != '\0') {
 		LC_I2C_write(this, *(buffer++));
+	}
+}
+
+void LC_I2C_print_pad(LiquidCrystal_I2C *this, const char *str, int length) {
+	uint8_t *buffer = (uint8_t*)str;
+	int n = this->_cols;
+	while ((--length >= 0) && (--n >= 0)) {
+		if (*buffer == 0x00) {
+			LC_I2C_write(this, (uint8_t)(' '));
+			buffer++;
+		}
+		else {
+			LC_I2C_write(this, *(buffer++));
+		}
 	}
 }
 
