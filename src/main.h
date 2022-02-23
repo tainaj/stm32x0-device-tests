@@ -8,7 +8,7 @@
 #include "button.h"
 
 // Define test number (1 to 7)
-#define TEST_NO     (1)
+#define TEST_NO     (6)
 
 // Define GPIOx pin mappings for I2Cy
 // (supports pins for x = GPIOA, GPIOB)
@@ -25,10 +25,10 @@
 // Test 2, 3, 4: Define GPIOx pin mappings for ... [1 LED output]
 // (supports pins for GPIOA, GPIOB, GPIOC)
 // (check your device datasheet)
-#define LED_GPIOx   (GPIOC)
-#define LED_PIN_1   (7)
-#define LED_PIN_2   (8) // disabled if test 2, 3, 4, 5
-#define LED_PIN_3   (9) // disabled if test 2, 3, 4, 5
+#define LED_GPIOx   (GPIOB)
+#define LED_PIN_1   (3)
+#define LED_PIN_2   (4) // disabled if test 2, 3, 4, 5
+#define LED_PIN_3   (5) // disabled if test 2, 3, 4, 5
 
 #endif /* LED_GPIOx */
 
@@ -37,9 +37,9 @@
 // (supports pins for GPIOA, GPIOB, GPIOC)
 // (check your device datasheet)
 #define INPUT_GPIOx     (GPIOA)
-#define INPUT_1         (0)
-#define INPUT_2         (1) // disabled if test 5
-#define INPUT_3         (7) // disabled if test 5, 7
+#define INPUT_1         (3)
+#define INPUT_2         (4) // disabled if test 5
+#define INPUT_3         (5) // disabled if test 5, 7
 
 #endif /* INPUT_GPIOx */
 
@@ -59,10 +59,10 @@
 // (...except L0: TIM22(CH1,CH2) = (PA6,PA7) -> AF5, does not work)
 // (supports CCR alt function no. y = [0,7])
 // (check your device datasheet)
-#define TIM_X_CCR_GPIOx     (GPIOB)
-#define TIM_X_CCR_AFy       (0x1)
-#define TIM_X_CCR_PIN_1     (4)
-#define TIM_X_CCR_PIN_2     (5)
+#define TIM_X_CCR_GPIOx     (GPIOA)
+#define TIM_X_CCR_AFy       (0x5)
+#define TIM_X_CCR_PIN_1     (9)
+#define TIM_X_CCR_PIN_2     (10)
 #define TIM_X_CCR_PIN_3     (0) // null
 #define TIM_X_CCR_PIN_4     (1) // null
 #endif /* TIM_X_CCR_GPIOx */
@@ -73,18 +73,18 @@
 // (supports slave timer X TS = 000 to 011)
 // (check your device datasheet)
 // (remember to uncomment the TIMx_IRQ_handler in interrupts_c.c and interrupts_c.h!)
-#define TIM_Y           (TIM15)
-#define TIM_X_TS        (0x2)
+#define TIM_Y           (TIM21)
+#define TIM_X_TS        (0x0)
 
 #endif /* TIM_Y */
 
 #if ((TEST_NO == 5))
 // Test 5: Define EXTI IRQn for EXTIx (INPUT_1 = x)
-// (supports x = [0,1] -> EXTI_0_1_IRQn)
-// (supports x = [2,3] -> EXTI_2_3_IRQn)
-// (supports x = [4,15] -> EXTI_4_15_IRQn)
+// (supports x = [0,1] -> EXTI0_1_IRQn)
+// (supports x = [2,3] -> EXTI2_3_IRQn)
+// (supports x = [4,15] -> EXTI4_15_IRQn)
 // (check your device datasheet)
-#define EXTI_X_IRQn        (EXTI4_15_IRQn)
+#define EXTI_X_IRQn        (EXTI2_3_IRQn)
 
 #endif /* EXTI_X_IRQn */
 

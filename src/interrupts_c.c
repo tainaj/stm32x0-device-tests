@@ -61,6 +61,28 @@ void TIM22_IRQ_handler(void) {
 #endif /* VVC_F0 or VVC_L0 */
 
 // EXTIx ISRS
+void EXTI0_1_IRQ_handler(void) {
+  // Check that EXTI6 is the line that triggered.
+  for (int i=0; i <= 1; i++) {
+    if (EXTI->PR & (1 << i)) {
+      flags |= FL_EXTIx;
+      EXTI->PR |= (1 << i);
+      break; // only one EXTI used for test 5
+    }
+  }
+}
+
+void EXTI2_3_IRQ_handler(void) {
+  // Check that EXTI6 is the line that triggered.
+  for (int i=2; i <= 3; i++) {
+    if (EXTI->PR & (1 << i)) {
+      flags |= FL_EXTIx;
+      EXTI->PR |= (1 << i);
+      break; // only one EXTI used for test 5
+    }
+  }
+}
+
 void EXTI4_15_IRQ_handler(void) {
   // Check that EXTI6 is the line that triggered.
   for (int i=4; i <= 15; i++) {

@@ -19,6 +19,8 @@ void TIM21_IRQ_handler(void);
 void TIM22_IRQ_handler(void);
 #endif /* VVC_F0 or VVC_L0 */
 
+void EXTI0_1_IRQ_handler(void);
+void EXTI2_3_IRQ_handler(void);
 void EXTI4_15_IRQ_handler(void);
 
 void DMA1_chan1_IRQ_handler(void);
